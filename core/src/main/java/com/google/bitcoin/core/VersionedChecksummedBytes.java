@@ -53,7 +53,7 @@ public class VersionedChecksummedBytes {
         byte[] addressBytes = new byte[1 + bytes.length + 4];
         addressBytes[0] = (byte) version;
         System.arraycopy(bytes, 0, addressBytes, 1, bytes.length);
-        byte[] checksum = Utils.doubleDigest(addressBytes, 0, bytes.length + 1);
+        byte[] checksum = CoinDefinition.get().addressChecksum(addressBytes, 0, bytes.length + 1);
         System.arraycopy(checksum, 0, addressBytes, bytes.length + 1, 4);
         return Base58.encode(addressBytes);
     }

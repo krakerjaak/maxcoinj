@@ -67,6 +67,14 @@ public abstract class NetworkParameters implements Serializable {
     // TODO: Seed nodes should be here as well.
 
     protected Block genesisBlock;
+    protected int genesisBlockVersion = 1;
+    protected Coin genesisBlockReward = FIFTY_COINS;
+    protected long genesisBlockDiffTarget = 0x1d07fff8L;
+    // A script containing the difficulty bits and the following message:
+    //   "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
+    protected byte[] genesisBlockScriptInput = Utils.HEX.decode("04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73");
+    protected byte[] genesisBlockScriptPublicKey = Utils.HEX.decode("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f");
+
     protected BigInteger maxTarget;
     protected int port;
     protected long packetMagic;  // Indicates message origin network and is used to seek to the next message when stream state is unknown.
@@ -75,6 +83,7 @@ public abstract class NetworkParameters implements Serializable {
     protected int dumpedPrivateKeyHeader;
     protected int interval;
     protected int targetTimespan;
+
     protected byte[] alertSigningKey;
 
     /**
@@ -82,13 +91,12 @@ public abstract class NetworkParameters implements Serializable {
      * by looking at the port number.
      */
     protected String id;
-
     /**
      * The depth of blocks required for a coinbase transaction to be spendable.
      */
     protected int spendableCoinbaseDepth;
+
     protected int subsidyDecreaseBlockCount;
-    
     protected int[] acceptableAddressCodes;
     protected String[] dnsSeeds;
     protected Map<Integer, Sha256Hash> checkpoints = new HashMap<Integer, Sha256Hash>();
@@ -98,21 +106,16 @@ public abstract class NetworkParameters implements Serializable {
         genesisBlock = createGenesis(this);
     }
 
-    private static Block createGenesis(NetworkParameters n) {
+    protected Block createGenesis(NetworkParameters n) {
         Block genesisBlock = new Block(n);
         Transaction t = new Transaction(n);
         try {
-            // A script containing the difficulty bits and the following message:
-            //
-            //   "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"
-            byte[] bytes = Utils.HEX.decode
-                    ("04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73");
+            byte[] bytes = n.getGenesisBlockScriptInput();
             t.addInput(new TransactionInput(n, t, bytes));
             ByteArrayOutputStream scriptPubKeyBytes = new ByteArrayOutputStream();
-            Script.writeBytes(scriptPubKeyBytes, Utils.HEX.decode
-                    ("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f"));
+            Script.writeBytes(scriptPubKeyBytes, n.getGenesisBlockScriptPublicKey());
             scriptPubKeyBytes.write(ScriptOpCodes.OP_CHECKSIG);
-            t.addOutput(new TransactionOutput(n, t, FIFTY_COINS, scriptPubKeyBytes.toByteArray()));
+            t.addOutput(new TransactionOutput(n, t, n.getGenesisBlockReward(), scriptPubKeyBytes.toByteArray()));
         } catch (Exception e) {
             // Cannot happen.
             throw new RuntimeException(e);
@@ -344,5 +347,25 @@ public abstract class NetworkParameters implements Serializable {
      */
     public byte[] getAlertSigningKey() {
         return alertSigningKey;
+    }
+
+    public Coin getGenesisBlockReward() {
+        return genesisBlockReward;
+    }
+
+    public int getGenesisBlockVersion() {
+        return genesisBlockVersion;
+    }
+
+    public long getGenesisBlockDiffTarget() {
+        return genesisBlockDiffTarget;
+    }
+
+    public byte[] getGenesisBlockScriptInput() {
+        return genesisBlockScriptInput;
+    }
+
+    public byte[] getGenesisBlockScriptPublicKey() {
+        return genesisBlockScriptPublicKey;
     }
 }

@@ -208,7 +208,7 @@ public class Transaction extends ChildMessage implements Serializable {
     public Sha256Hash getHash() {
         if (hash == null) {
             byte[] bits = bitcoinSerialize();
-            hash = new Sha256Hash(reverseBytes(doubleDigest(bits)));
+            hash = new Sha256Hash(CoinDefinition.get().transactionHash(bits));
         }
         return hash;
     }
