@@ -49,10 +49,8 @@ public class MaxcoinMainNetParams extends NetworkParameters {
         checkpoints.put(111111, new Sha256Hash("0000000000023b44c09a7f8740cec05de8d88e7cbc606457cf86c45a8f1c2c1d"));
 
         dnsSeeds = new String[] {
-                "maxcoin.cloudapp.net",
-                "maxcoinus.cloudapp.net",
-                "maxcoinasia.cloudapp.net",
-                "maxexplorer.cloudapp.net"
+                "213.179.202.19",
+                "wombat.dar.sh"
         };
     }
 
