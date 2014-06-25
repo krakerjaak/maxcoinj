@@ -43,6 +43,7 @@ public class ForwardingService {
 
     public static void main(String[] args) throws Exception {
 
+        // this is needed to enable Maxcoin-specific stuff all around the library
         CoinDefinition.setGlobalInstance(new MaxcoinDefinition());
 
         // This line makes the log output more compact and easily read, especially when using the JDK log adapter.
@@ -71,11 +72,11 @@ public class ForwardingService {
         // Start up a basic app using a class that automates some boilerplate.
         kit = new WalletAppKit(params, new File("."), filePrefix);
 
-        if (params == RegTestParams.get()) {
-            // Regression test mode is designed for testing and development only, so there's no public network for it.
-            // If you pick this mode, you're expected to be running a local "bitcoind -regtest" instance.
-            kit.connectToLocalHost();
-        }
+//        if (params == RegTestParams.get()) {
+//            // Regression test mode is designed for testing and development only, so there's no public network for it.
+//            // If you pick this mode, you're expected to be running a local "bitcoind -regtest" instance.
+//            kit.connectToLocalHost();
+//        }
 
         // Download the block chain and wait until it's done.
         kit.startAsync();
