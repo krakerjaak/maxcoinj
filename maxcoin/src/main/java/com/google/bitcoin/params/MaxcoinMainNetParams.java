@@ -17,11 +17,11 @@ public class MaxcoinMainNetParams extends NetworkParameters {
         genesisBlockScriptPublicKey = Utils.HEX.decode("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f");
         genesisBlockReward = Coin.valueOf(5, 0);
         genesisBlockVersion = 112;
-        genesisBlockDiffTarget = /*0x1d00ffffL*/0;
+        genesisBlockDiffTarget = 0x1E00FFFFL;
 
         interval = NetworkParameters.INTERVAL;
         targetTimespan = NetworkParameters.TARGET_TIMESPAN;
-        maxTarget = Utils.decodeCompactBits(0x1d00ffffL);
+        maxTarget = Utils.decodeCompactBits(0x1E00FFFFL);
         dumpedPrivateKeyHeader = 128;
         addressHeader = 112;
         p2shHeader = 110;

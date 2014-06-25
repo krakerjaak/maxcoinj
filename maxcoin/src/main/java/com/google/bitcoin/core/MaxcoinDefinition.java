@@ -9,10 +9,7 @@ public class MaxcoinDefinition extends CoinDefinition {
 
     @Override
     public byte[] addressChecksum(byte[] bytes, int offset, int length) {
-        // single round of keccak256
-        Keccak256 digest = new Keccak256();
-        digest.digest(bytes, offset, length);
-        return digest.digest();
+        return hashKeccak(bytes, offset, length);
     }
 
     @Override
@@ -20,7 +17,14 @@ public class MaxcoinDefinition extends CoinDefinition {
         return reverseBytes(singleDigest(bytes, 0, bytes.length));
     }
 
-//    public byte[] blockHash(byte[] bytes) {
-//        return transactionHash(bytes);
-//    }
+    public byte[] blockHash(byte[] bytes) {
+        return reverseBytes(hashKeccak(bytes, 0, bytes.length));
+    }
+
+    private byte[] hashKeccak(byte[] bytes, int offset, int length) {
+        // single round of keccak256
+        Keccak256 digest = new Keccak256();
+        digest.update(bytes, offset, length);
+        return digest.digest();
+    }
 }

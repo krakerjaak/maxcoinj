@@ -23,7 +23,7 @@ public class CoinDefinition {
     }
 
     public byte[] blockHash(byte[] bytes) {
-        return Utils.reverseBytes(doubleDigest(bytes));
+        return reverseBytes(doubleDigest(bytes));
     }
 
     private static CoinDefinition globalInstance = new CoinDefinition();
