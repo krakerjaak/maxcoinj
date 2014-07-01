@@ -26,7 +26,7 @@ public class MaxcoinMainNetParams extends NetworkParameters {
         interval = targetTimespan / blockTargetSpacingSeconds;
         maxTarget = Utils.decodeCompactBits(genesisBlockDiffTarget);
         dumpedPrivateKeyHeader = 128;
-        addressHeader = 112;
+        addressHeader = 110;
         p2shHeader = 110;
         acceptableAddressCodes = new int[] { addressHeader, p2shHeader };
         port = 8668;
