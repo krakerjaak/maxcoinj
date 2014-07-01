@@ -23,7 +23,7 @@ The ForwardingService example is able to see incoming transactions, but I have y
 
 To get started, ensure you have the latest JDK installed, and download Maven from:
 
-  http://maven.apache.org/
+[http://maven.apache.org/]
 
 Then run "mvn clean package" to compile the software. You can also run "mvn site:site" to generate a website with
 useful information like JavaDocs. The outputs are under the target/ directory.
@@ -33,8 +33,8 @@ find your unzipped Maven install directory.
 
 Now try running one of the example apps:
 
-  cd examples
-  mvn exec:java -Dexec.mainClass=com.google.bitcoin.examples.ForwardingService -Dexec.args="<insert a bitcoin address here>"
+    cd examples
+    mvn exec:java -Dexec.mainClass=com.google.bitcoin.examples.ForwardingService -Dexec.args="<insert a bitcoin address here>"
 
 It will download the block chain and eventually print a Bitcoin address. If you send coins to it,
 it will forward them on to the address you specified. Note that this example app does not use
@@ -44,5 +44,5 @@ more info on this.
 
 Now you are ready to follow the tutorial:
 
-   https://bitcoinj.github.io/getting-started
+[https://bitcoinj.github.io/getting-started]
 
