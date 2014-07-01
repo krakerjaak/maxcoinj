@@ -36,7 +36,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.google.bitcoin.core.Coin.FIFTY_COINS;
-import static com.google.bitcoin.core.Utils.doubleDigest;
 import static com.google.bitcoin.core.Utils.doubleDigestTwoBuffers;
 
 /**

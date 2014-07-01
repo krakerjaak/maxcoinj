@@ -6,7 +6,8 @@ import static com.google.bitcoin.core.Utils.reverseBytes;
 /**
  * Represents a globally-replaceable strategy for the coin. This class has been created to facilitate porting
  * of the BitcoinJ code to other coins.
- * To support another coin, call CoinDefinition.setGlobalInstance() just before initializing anything.
+ * To support another coin, call CoinDefinition.setGlobalInstance() just before initializing anything else in
+ * the client application.
  */
 public class CoinDefinition {
 
@@ -24,6 +25,10 @@ public class CoinDefinition {
 
     public byte[] blockHash(byte[] bytes) {
         return reverseBytes(doubleDigest(bytes));
+    }
+
+    public byte[] messageChecksum(byte[] payloadBytes) {
+        return doubleDigest(payloadBytes);
     }
 
     private static CoinDefinition globalInstance = new CoinDefinition();

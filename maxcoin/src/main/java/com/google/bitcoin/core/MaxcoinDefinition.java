@@ -22,6 +22,11 @@ public class MaxcoinDefinition extends CoinDefinition {
         return reverseBytes(hashKeccak(bytes, 0, bytes.length));
     }
 
+    @Override
+    public byte[] messageChecksum(byte[] payloadBytes) {
+        return hashKeccak(payloadBytes, 0, payloadBytes.length);
+    }
+
     private byte[] hashKeccak(byte[] bytes, int offset, int length) {
         // single round of keccak256
         Keccak256 digest = new Keccak256();
