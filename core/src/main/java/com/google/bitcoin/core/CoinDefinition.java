@@ -24,7 +24,11 @@ public class CoinDefinition {
     }
 
     public byte[] blockHash(byte[] bytes) {
-        return reverseBytes(doubleDigest(bytes));
+        return blockHash(bytes, 0, bytes.length);
+    }
+
+    public byte[] blockHash(byte[] bytes, int offset, int length) {
+        return reverseBytes(doubleDigest(bytes, offset, length));
     }
 
     public byte[] messageChecksum(byte[] payloadBytes) {

@@ -189,7 +189,7 @@ public class Block extends Message {
         difficultyTarget = readUint32();
         nonce = readUint32();
 
-        hash = new Sha256Hash(Utils.reverseBytes(Utils.doubleDigest(payload, offset, cursor)));
+        hash = new Sha256Hash(CoinDefinition.get().blockHash(payload, offset, cursor));
 
         headerParsed = true;
         headerBytesValid = parseRetain;

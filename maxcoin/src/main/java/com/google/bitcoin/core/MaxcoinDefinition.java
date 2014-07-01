@@ -18,8 +18,8 @@ public class MaxcoinDefinition extends CoinDefinition {
     }
 
     @Override
-    public byte[] blockHash(byte[] bytes) {
-        return reverseBytes(hashKeccak(bytes, 0, bytes.length));
+    public byte[] blockHash(byte[] bytes, int offset, int length) {
+        return reverseBytes(hashKeccak(bytes, offset, length));
     }
 
     @Override
