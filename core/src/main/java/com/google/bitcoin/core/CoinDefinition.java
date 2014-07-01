@@ -1,5 +1,7 @@
 package com.google.bitcoin.core;
 
+import com.google.bitcoin.store.BlockStore;
+
 import static com.google.bitcoin.core.Utils.doubleDigest;
 import static com.google.bitcoin.core.Utils.reverseBytes;
 
@@ -10,6 +12,10 @@ import static com.google.bitcoin.core.Utils.reverseBytes;
  * the client application.
  */
 public class CoinDefinition {
+
+    public DifficultyRetargetStrategy getDifficultyRetargetStrategy(NetworkParameters params, BlockStore blockStore) {
+        return new BitcoinDifficultyRetargetStrategy(params, blockStore);
+    }
 
     public byte[] addressChecksum(byte[] bytes) {
         return addressChecksum(bytes, 0, bytes.length);

@@ -1,11 +1,17 @@
 package com.google.bitcoin.core;
 
+import com.google.bitcoin.store.BlockStore;
 import fr.cryptohash.Keccak256;
 
 import static com.google.bitcoin.core.Utils.reverseBytes;
 import static com.google.bitcoin.core.Utils.singleDigest;
 
 public class MaxcoinDefinition extends CoinDefinition {
+
+    @Override
+    public DifficultyRetargetStrategy getDifficultyRetargetStrategy(NetworkParameters params, BlockStore blockStore) {
+        return new KimotoGravityWellDiffTargetStrategy(params, blockStore);
+    }
 
     @Override
     public byte[] addressChecksum(byte[] bytes, int offset, int length) {

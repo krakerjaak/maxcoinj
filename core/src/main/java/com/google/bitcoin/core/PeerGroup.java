@@ -78,7 +78,7 @@ import static com.google.common.base.Preconditions.checkState;
  */
 public class PeerGroup extends AbstractExecutionThreadService implements TransactionBroadcaster {
     private static final Logger log = LoggerFactory.getLogger(PeerGroup.class);
-    private static final int DEFAULT_CONNECTIONS = 4;
+    private static final int DEFAULT_CONNECTIONS = 1;
     private static final int TOR_TIMEOUT_SECONDS = 20;
 
     protected final ReentrantLock lock = Threading.lock("peergroup");
