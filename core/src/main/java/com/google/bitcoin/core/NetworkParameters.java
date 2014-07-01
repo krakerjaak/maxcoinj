@@ -316,6 +316,13 @@ public abstract class NetworkParameters implements Serializable {
     }
 
     /**
+     * @return the number of time (in seconds) between each block
+     */
+    public int getBlockTargetSpacingSeconds() {
+        return getInterval() / getTargetTimespan();
+    }
+
+    /**
      * The version codes that prefix addresses which are acceptable on this network. Although Satoshi intended these to
      * be used for "versioning", in fact they are today used to discriminate what kind of data is contained in the
      * address and to prevent accidentally sending coins across chains which would destroy them.

@@ -53,6 +53,11 @@ public class MaxcoinMainNetParams extends NetworkParameters {
         };
     }
 
+    @Override
+    public int getBlockTargetSpacingSeconds() {
+        return 30;
+    }
+
     private static MaxcoinMainNetParams instance;
     public static synchronized MaxcoinMainNetParams get() {
         if (instance == null) {

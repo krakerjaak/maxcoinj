@@ -12,29 +12,35 @@ import static java.lang.Math.pow;
 public class KimotoGravityWellDiffTargetStrategy implements DifficultyRetargetStrategy {
     private static final Logger log = LoggerFactory.getLogger(BitcoinDifficultyRetargetStrategy.class);
 
-    private static final long BLOCKS_TARGET_SPACING = 30;
     private static final int TIME_DAY_SECONDS = 60 * 60 * 24;
     private static final long PAST_SECONDS_MIN = TIME_DAY_SECONDS / 100;
     private static final long PAST_SECONDS_MAX = TIME_DAY_SECONDS * 14 / 100;
-    private static final long PAST_BLOCKS_MIN = PAST_SECONDS_MIN / BLOCKS_TARGET_SPACING;
-    private static final long PAST_BLOCKS_MAX = PAST_SECONDS_MAX / BLOCKS_TARGET_SPACING;
 
     private final NetworkParameters params;
     private final BlockStore blockStore;
+
+    // calculated values
+    private int blockTargetSpacing;
+    private long pastBlocksMin;
+    private long pastBlocksMax;
 
     public KimotoGravityWellDiffTargetStrategy(NetworkParameters params, BlockStore blockStore) {
 
         this.params = params;
         this.blockStore = blockStore;
+
+        this.blockTargetSpacing = params.getBlockTargetSpacingSeconds();
+        this.pastBlocksMin = PAST_SECONDS_MIN / blockTargetSpacing;
+        this.pastBlocksMax = PAST_SECONDS_MAX / blockTargetSpacing;
     }
 
     @Override
     public void checkDifficultyTransition(StoredBlock storedPrev, Block nextBlock) throws BlockStoreException {
 
         kimotoGravityWell(storedPrev, nextBlock,
-                BLOCKS_TARGET_SPACING,
-                PAST_BLOCKS_MIN,
-                PAST_BLOCKS_MAX
+                blockTargetSpacing,
+                pastBlocksMin,
+                pastBlocksMax
         );
     }
 
