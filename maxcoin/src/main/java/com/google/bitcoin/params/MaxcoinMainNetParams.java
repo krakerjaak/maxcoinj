@@ -9,6 +9,8 @@ import static com.google.common.base.Preconditions.checkState;
 
 public class MaxcoinMainNetParams extends NetworkParameters {
 
+    protected int blockTargetSpacingSeconds = 30;
+
     public MaxcoinMainNetParams() {
         super();
 
@@ -19,9 +21,10 @@ public class MaxcoinMainNetParams extends NetworkParameters {
         genesisBlockVersion = 112;
         genesisBlockDiffTarget = 0x1E00FFFFL;
 
-        interval = NetworkParameters.INTERVAL;
-        targetTimespan = NetworkParameters.TARGET_TIMESPAN;
-        maxTarget = Utils.decodeCompactBits(0x1E00FFFFL);
+        blockTargetSpacingSeconds = 30;         // 30 seconds
+        targetTimespan = 60 * 3;                // 3 minutes
+        interval = targetTimespan / blockTargetSpacingSeconds;
+        maxTarget = Utils.decodeCompactBits(genesisBlockDiffTarget);
         dumpedPrivateKeyHeader = 128;
         addressHeader = 112;
         p2shHeader = 110;
@@ -55,7 +58,7 @@ public class MaxcoinMainNetParams extends NetworkParameters {
 
     @Override
     public int getBlockTargetSpacingSeconds() {
-        return 30;
+        return blockTargetSpacingSeconds;
     }
 
     private static MaxcoinMainNetParams instance;

@@ -10,7 +10,10 @@ public class MaxcoinDefinition extends CoinDefinition {
 
     @Override
     public DifficultyRetargetStrategy getDifficultyRetargetStrategy(NetworkParameters params, BlockStore blockStore) {
-        return new KimotoGravityWellDiffTargetStrategy(params, blockStore);
+        return new BlockHeightDifficultyRetargetStrategySelector(200,
+                new BitcoinDifficultyRetargetStrategy(params, blockStore),
+                new KimotoGravityWellDiffTargetStrategy(params, blockStore)
+        );
     }
 
     @Override
