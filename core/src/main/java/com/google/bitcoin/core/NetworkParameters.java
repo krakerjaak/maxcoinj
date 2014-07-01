@@ -319,7 +319,7 @@ public abstract class NetworkParameters implements Serializable {
      * @return the number of time (in seconds) between each block
      */
     public int getBlockTargetSpacingSeconds() {
-        return getInterval() / getTargetTimespan();
+        return TARGET_SPACING;
     }
 
     /**

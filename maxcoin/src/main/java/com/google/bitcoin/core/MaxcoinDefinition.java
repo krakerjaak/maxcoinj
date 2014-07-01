@@ -8,12 +8,18 @@ import static com.google.bitcoin.core.Utils.singleDigest;
 
 public class MaxcoinDefinition extends CoinDefinition {
 
+    private DifficultyRetargetStrategy difficultyRetargetStrategy = null;
+
     @Override
     public DifficultyRetargetStrategy getDifficultyRetargetStrategy(NetworkParameters params, BlockStore blockStore) {
-        return new BlockHeightDifficultyRetargetStrategySelector(200,
-                new BitcoinDifficultyRetargetStrategy(params, blockStore),
-                new KimotoGravityWellDiffTargetStrategy(params, blockStore)
-        );
+        // only create it once
+        if (difficultyRetargetStrategy == null) {
+            difficultyRetargetStrategy = new BlockHeightDifficultyRetargetStrategySelector(200,
+                    new TweakedBitcoinDifficultyRetargetStrategy(params, blockStore),
+                    new KimotoGravityWellDiffTargetStrategy(params, blockStore)
+            );
+        }
+        return difficultyRetargetStrategy;
     }
 
     @Override

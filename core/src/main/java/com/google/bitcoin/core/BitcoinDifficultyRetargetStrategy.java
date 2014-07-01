@@ -8,14 +8,17 @@ import org.slf4j.LoggerFactory;
 import java.math.BigInteger;
 import java.util.Date;
 
+/**
+ * This has been extracted from the original BitcoinJ code as-is.
+ */
 public class BitcoinDifficultyRetargetStrategy implements DifficultyRetargetStrategy {
     private static final Logger log = LoggerFactory.getLogger(BitcoinDifficultyRetargetStrategy.class);
 
     // February 16th 2012
     private static final Date testnetDiffDate = new Date(1329264000000L);
 
-    private NetworkParameters params;
-    private BlockStore blockStore;
+    protected NetworkParameters params;
+    protected BlockStore blockStore;
 
     public BitcoinDifficultyRetargetStrategy(NetworkParameters params, BlockStore blockStore) {
         this.params = params;
@@ -49,7 +52,9 @@ public class BitcoinDifficultyRetargetStrategy implements DifficultyRetargetStra
         // two weeks after the initial block chain download.
         long now = System.currentTimeMillis();
         StoredBlock cursor = blockStore.get(prev.getHash());
-        for (int i = 0; i < params.getInterval() - 1; i++) {
+
+        int blocksLookback = calculateBlocksLookback(storedPrev);
+        for (int i = 0; i < blocksLookback; i++) {
             if (cursor == null) {
                 // This should never happen. If it does, it means we are following an incorrect or busted chain.
                 throw new VerificationException(
@@ -90,6 +95,10 @@ public class BitcoinDifficultyRetargetStrategy implements DifficultyRetargetStra
         if (newTargetCompact != receivedTargetCompact)
             throw new VerificationException("Network provided difficulty bits do not match what was calculated: " +
                     newTargetCompact + " vs " + receivedTargetCompact);
+    }
+
+    protected int calculateBlocksLookback(StoredBlock storedPrev) {
+        return params.getInterval() - 1;
     }
 
     private void checkTestnetDifficulty(StoredBlock storedPrev, Block prev, Block next) throws VerificationException, BlockStoreException {

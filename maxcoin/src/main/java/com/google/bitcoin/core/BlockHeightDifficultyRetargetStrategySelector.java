@@ -21,7 +21,7 @@ public class BlockHeightDifficultyRetargetStrategySelector implements Difficulty
 
     @Override
     public void checkDifficultyTransition(StoredBlock storedPrev, Block nextBlock) throws BlockStoreException {
-        if (storedPrev.getHeight() < blockHeightToSwitch) {
+        if (storedPrev.getHeight()+1 < blockHeightToSwitch) {
             strategyBefore.checkDifficultyTransition(storedPrev, nextBlock);
         } else {
             strategyAfter.checkDifficultyTransition(storedPrev, nextBlock);
