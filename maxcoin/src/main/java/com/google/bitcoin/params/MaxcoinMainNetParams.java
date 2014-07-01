@@ -27,7 +27,7 @@ public class MaxcoinMainNetParams extends NetworkParameters {
         p2shHeader = 110;
         acceptableAddressCodes = new int[] { addressHeader, p2shHeader };
         port = 8668;
-        packetMagic = 0xf9beb4d9L;
+        packetMagic = 0xf9bebbd2L;
 
         genesisBlock = createGenesis(this);
         genesisBlock.setTime(1390822264L);
