@@ -138,11 +138,6 @@ public class KimotoGravityWellDiffTargetStrategy implements DifficultyRetargetSt
             newDifficulty = newDifficulty.divide(BigInteger.valueOf(pastRateTargetSeconds));
         }
 
-        if (newDifficulty.compareTo(params.getMaxTarget()) > 0) {
-            log.info("Difficulty hit proof of work limit: {}", newDifficulty.toString(16));
-            newDifficulty = params.getMaxTarget();
-        }
-
         verifyDifficulty(newDifficulty, nextBlock);
     }
 
@@ -151,6 +146,7 @@ public class KimotoGravityWellDiffTargetStrategy implements DifficultyRetargetSt
             log.info("Difficulty hit proof of work limit: {}", calcDiff.toString(16));
             calcDiff = params.getMaxTarget();
         }
+
         int accuracyBytes = (int) (nextBlock.getDifficultyTarget() >>> 24) - 3;
         BigInteger receivedDifficulty = nextBlock.getDifficultyTargetAsInteger();
 
